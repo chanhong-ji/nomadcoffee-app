@@ -10,11 +10,12 @@ const Wrapper = styled.View`
 const Container = styled.ScrollView``;
 const Top = styled.View``;
 const Avatar = styled.Image`
-  width: 40;
-  height: 40;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
 `;
 const Username = styled.Text`
-  color: ${(props) => props.theme.color.text};
+  color: ${(props) => props.theme.color.accent};
 `;
 const Items = styled.View``;
 const TotalFollower = styled.View``;

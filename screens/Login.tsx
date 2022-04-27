@@ -13,7 +13,7 @@ interface IForm {
 }
 
 const Input = styled.TextInput`
-  color: ${(props) => props.theme.color.text};
+  color: ${(props) => props.theme.color.accent};
 `;
 
 const toNext = (nextRef: React.MutableRefObject<any>) =>

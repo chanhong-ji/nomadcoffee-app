@@ -1,7 +1,7 @@
 import { useReactiveVar } from "@apollo/client";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React, { useContext } from "react";
-import { DefaultTheme, ThemeContext } from "styled-components/native";
+import styled, { DefaultTheme, ThemeContext } from "styled-components/native";
 import { loggedInVar } from "./apollo";
 import { Ionicons } from "@expo/vector-icons";
 import Home from "./screens/Home";
@@ -11,24 +11,36 @@ import Search from "./screens/Search";
 
 const Tab = createBottomTabNavigator();
 
+const Title = styled.Text`
+  color: ${(props) => props.theme.color.accent};
+  font-size: 20px;
+  font-weight: 600;
+`;
+
 function Nav() {
   const theme: DefaultTheme = useContext(ThemeContext);
   const loggedIn = useReactiveVar(loggedInVar);
+  const headerTitle = () => <Title>Nomad coffee</Title>;
 
   return (
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: theme.color.bg,
+          backgroundColor: theme.color.secondBg,
           justifyContent: "center",
+          shadowColor: theme.color.border,
+          shadowOpacity: 0.1,
         },
         tabBarShowLabel: false,
-        tabBarActiveTintColor: theme.color.text,
+        tabBarActiveTintColor: theme.color.accent,
+
+        headerTitle,
         headerStyle: {
-          backgroundColor: theme.color.bg,
+          backgroundColor: theme.color.secondBg,
+          shadowColor: theme.color.border,
         },
         headerTitleStyle: {
-          color: theme.color.text,
+          color: theme.color.accent,
         },
       }}
       sceneContainerStyle={{
