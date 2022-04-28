@@ -76,6 +76,10 @@ function ShopBanner({
           id: `CoffeeShop:${id}`,
           fields: {
             isLiked: (prev) => !prev,
+            likeCount: (prev, { readField }) => {
+              if (readField("isLiked") === true) return prev - 1;
+              return prev + 1;
+            },
           },
         });
       },
