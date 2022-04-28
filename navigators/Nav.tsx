@@ -2,12 +2,13 @@ import { useReactiveVar } from "@apollo/client";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React, { useContext } from "react";
 import styled, { DefaultTheme, ThemeContext } from "styled-components/native";
-import { loggedInVar } from "./apollo";
+import { loggedInVar } from "../apollo";
 import { Ionicons } from "@expo/vector-icons";
-import Home from "./screens/Home";
-import Login from "./screens/Login";
-import Profile from "./screens/Profile";
-import Search from "./screens/Search";
+import Home from "../screens/Home";
+import Login from "../screens/Login";
+import Profile from "../screens/Profile";
+import SearchNav from "./SearchNav";
+import SearchBar from "../components/SearchBar";
 
 const Tab = createBottomTabNavigator();
 
@@ -16,11 +17,22 @@ const Title = styled.Text`
   font-size: 20px;
   font-weight: 600;
 `;
+const HeaderContainer = styled.View`
+  height: 110px;
+  background-color: ${(props) => props.theme.color.secondBg};
+  justify-content: flex-end;
+`;
 
 function Nav() {
   const theme: DefaultTheme = useContext(ThemeContext);
   const loggedIn = useReactiveVar(loggedInVar);
+
   const headerTitle = () => <Title>Nomad coffee</Title>;
+  const Header = () => (
+    <HeaderContainer>
+      <SearchBar />
+    </HeaderContainer>
+  );
 
   return (
     <Tab.Navigator
@@ -62,17 +74,19 @@ function Nav() {
       />
       <Tab.Screen
         name="Search"
-        component={Search}
         options={{
           tabBarIcon: ({ focused, color }) => (
             <Ionicons
               name={focused ? "search" : "search-outline"}
               color={color}
               size={focused ? 32 : 27}
-            ></Ionicons>
+            />
           ),
+          header: Header,
         }}
-      />
+      >
+        {SearchNav}
+      </Tab.Screen>
       <Tab.Screen
         name="Profile"
         component={loggedIn ? Profile : Login}

@@ -9,8 +9,8 @@ import {
   toggleLikeVariables,
 } from "../codegen/__generated__/toggleLike";
 
-const Container = styled.View`
-  width: 50%;
+const Container = styled.View<{ width: number }>`
+  width: ${(props) => props.width}%;
 `;
 const MainPhotoContainer = styled.Pressable``;
 const MainPhoto = styled.Image<{ windowWidth: number }>`
@@ -62,7 +62,8 @@ function ShopBanner({
   isMine,
   likeCount,
   index,
-}: seeCoffeeShops_seeCoffeeShops & { index: number }) {
+  width,
+}: seeCoffeeShops_seeCoffeeShops & { index: number; width: number }) {
   const navigation = useNavigation();
   const { width: windowWidth } = useWindowDimensions();
   const [toggleLike] = useMutation<toggleLike, toggleLikeVariables>(
@@ -87,7 +88,7 @@ function ShopBanner({
   );
 
   return (
-    <Container>
+    <Container width={width}>
       <MainPhotoContainer
         onPress={() => {
           console.log("photo clicked");

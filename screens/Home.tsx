@@ -5,23 +5,15 @@ import { ThemeContext } from "styled-components/native";
 import { seeCoffeeShops } from "../codegen/__generated__/seeCoffeeShops";
 import Categories from "../components/Categories";
 import ShopBanner from "../components/ShopBanner";
+import { SHOP_FRAGMENT } from "../fragment";
 
 const SEE_COFFEESHOPS_QUERY = gql`
   query seeCoffeeShops($offset: Int!) {
     seeCoffeeShops(offset: $offset) {
-      id
-      name
-      categories {
-        name
-      }
-      mainPhoto {
-        url
-      }
-      isLiked
-      isMine
-      likeCount
+      ...ShopFragment
     }
   }
+  ${SHOP_FRAGMENT}
 `;
 
 function Home() {
@@ -51,7 +43,7 @@ function Home() {
           }}
           data={data?.seeCoffeeShops}
           renderItem={({ item, index }) =>
-            item ? <ShopBanner {...item} index={index} /> : null
+            item ? <ShopBanner {...item} index={index} width={50} /> : null
           }
           keyExtractor={(item, index) => String(item?.id)}
           onEndReached={() =>
